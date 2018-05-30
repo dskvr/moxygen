@@ -56,20 +56,21 @@ function toMarkdown(element, context) {
           case 'heading': s = '## '; break;
           case 'xrefsect': s += '\n> '; break;
           case 'simplesect':
-            if (element.$.kind == 'attention') {
-              s = '> ';
-            }
-            else if (element.$.kind == 'return') {
-              s = '\n#### Returns\n'
-            }
-            else if (element.$.kind == 'see') {
-              s = '\n**See also**: '
-            }
-            else {
-              console.assert(element.$.kind + ' not supported.');
+            switch (element.$.kind) {
+              case 'attention':
+                s = '> '; break;
+              case 'return':
+                s = '\n#### Returns\n'; break;
+              case 'pre':
+                s = '\n#### Precondition\n'; break;
+              case 'post':
+                s = '\n#### Post Condition\n'; break;
+              case 'see':
+                s = '\n**See also**: '; break;
+              default:
+                console.assert(element.$.kind + ' not supported.');
             }
             break;
-
           case 'xreftitle':
           case 'entry':
           case 'row':
